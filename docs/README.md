@@ -1,102 +1,100 @@
 ## Table of contents
 
+### Type aliases
+
+- [Arguments][1]
+- [Context][2]
+- [Parser][3]
+- [Program][4]
+
 ### Functions
 
-*   [diff][1]
-*   [div][2]
-*   [mult][3]
-*   [sum][4]
+- [configureProgram][5]
+
+## Type aliases
+
+### Arguments
+
+Ƭ **Arguments**\<T>: T & { \[argName: string]: _unknown_; `$0`: _string_ ; `_`:
+(_string_ | _number_)\[] }
+
+#### Type parameters:
+
+| Name | Default |
+| ---- | ------- |
+| `T`  | {}      |
+
+Defined in: node_modules/@types/yargs/index.d.ts:641
+
+---
+
+### Context
+
+Ƭ **Context**: { `parse`: [_Parser_][3] ; `program`: [_Program_][4] }
+
+#### Type declaration:
+
+| Name      | Type           |
+| --------- | -------------- |
+| `parse`   | [_Parser_][3]  |
+| `program` | [_Program_][4] |
+
+Defined in: [src/index.ts:12][6]
+
+---
+
+### Parser
+
+Ƭ **Parser**: (`argv?`: _string_\[]) => _Promise_<[_Arguments_][1]>
+
+Defined in: [src/index.ts:10][7]
+
+---
+
+### Program
+
+Ƭ **Program**: Argv
+
+Defined in: [src/index.ts:8][8]
 
 ## Functions
 
-### diff
+### configureProgram
 
-▸ **diff**(`a`: *number*, `b`: *number*): *number*
+▸ **configureProgram**(): [_Context_][2]
 
-Returns the difference of `a` and `b`
+Create and return a pre-configured Yargs instance (program) and argv parser.
 
-#### Parameters:
+**Returns:** [_Context_][2]
 
-| Name | Type     |
-| ---- | -------- |
-| `a`  | *number* |
-| `b`  | *number* |
+Defined in: [src/index.ts:22][9]
 
-**Returns:** *number*
+▸ **configureProgram**(`program`: [_Program_][4]): [_Context_][2]
 
-Defined in: [index.ts:11][5]
-
-***
-
-### div
-
-▸ **div**({ `dividend`: *number* ; `divisor`: *number*  }): *number*
-
-Returns the quotient of `dividend` and `divisor`
+Configure an existing Yargs instance (program) and return an argv parser.
 
 #### Parameters:
 
-**({ destructured })**: *object*
+| Name      | Type           | Description                   |
+| --------- | -------------- | ----------------------------- |
+| `program` | [_Program_][4] | A Yargs instance to configure |
 
-| Name       | Type     |
-| ---------- | -------- |
-| `dividend` | *number* |
-| `divisor`  | *number* |
+**Returns:** [_Context_][2]
 
-**Returns:** *number*
+Defined in: [src/index.ts:28][10]
 
-Defined in: [index.ts:25][6]
-
-***
-
-### mult
-
-▸ **mult**(`a`: *number*, `b`: *number*): *number*
-
-Returns the product of `a` and `b`
-
-#### Parameters:
-
-| Name | Type     |
-| ---- | -------- |
-| `a`  | *number* |
-| `b`  | *number* |
-
-**Returns:** *number*
-
-Defined in: [index.ts:18][7]
-
-***
-
-### sum
-
-▸ **sum**(`a`: *number*, `b`: *number*): *number*
-
-Returns the sum of `a` and `b`
-
-#### Parameters:
-
-| Name | Type     |
-| ---- | -------- |
-| `a`  | *number* |
-| `b`  | *number* |
-
-**Returns:** *number*
-
-Defined in: [index.ts:4][8]
-
-[1]: README.md#diff
-
-[2]: README.md#div
-
-[3]: README.md#mult
-
-[4]: README.md#sum
-
-[5]: https://github.com/Xunnamius/projector-lens-cli/blob/26a8371/src/index.ts#L11
-
-[6]: https://github.com/Xunnamius/projector-lens-cli/blob/26a8371/src/index.ts#L25
-
-[7]: https://github.com/Xunnamius/projector-lens-cli/blob/26a8371/src/index.ts#L18
-
-[8]: https://github.com/Xunnamius/projector-lens-cli/blob/26a8371/src/index.ts#L4
+[1]: README.md#arguments
+[2]: README.md#context
+[3]: README.md#parser
+[4]: README.md#program
+[5]: README.md#configureprogram
+[6]:
+  https://github.com/Xunnamius/projector-lens-cli/blob/25509b4/src/index.ts#L12
+[7]:
+  https://github.com/Xunnamius/projector-lens-cli/blob/25509b4/src/index.ts#L10
+[8]:
+  https://github.com/Xunnamius/projector-lens-cli/blob/25509b4/src/index.ts#L8
+[9]:
+  https://github.com/Xunnamius/projector-lens-cli/blob/25509b4/src/index.ts#L22
+[10]:
+  https://github.com/Xunnamius/projector-lens-cli/blob/25509b4/src/index.ts#L28
