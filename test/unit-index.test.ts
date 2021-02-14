@@ -1,44 +1,68 @@
-import { name as pkgName, version as pkgVersion } from '../package.json';
-import { sum, diff, mult, div } from '../src/index';
-import debugFactory from 'debug';
+import { name as pkgName } from '../package.json';
+import { configureProgram } from '../src/index';
+import { asMockedFunction, setArgv } from './setup';
+
+import { functionality } from '../src/lib';
+
+import type { Context } from '../src/index';
 
 const TEST_IDENTIFIER = 'unit-index';
-const debug = debugFactory(`${pkgName}:${TEST_IDENTIFIER}`);
 
-debug(`pkgName: "${pkgName}"`);
-debug(`pkgVersion: "${pkgVersion}"`);
+// ! Note:
+// !   - jest.mock calls are hoisted to the top even above imports
+// !   - factory function of jest.mock(...) is not guaranteed to run early
+// !   - better to manipulate mock in beforeAll() vs using a factory function
+jest.mock('../src/lib');
+
+const mockedFunctionality = asMockedFunction(functionality);
+
+const getProgram = () => {
+  const ctx = configureProgram();
+  ctx.program.exitProcess(false);
+  return ctx;
+};
+
+const runProgram = async (argv: string[], ctx?: Context) => {
+  return (ctx || getProgram()).parse(argv);
+};
+
+let resetArgv: ReturnType<typeof setArgv>;
+let stderrSpy: ReturnType<typeof jest.spyOn>;
+
+beforeAll(() => {
+  // ? Store original arguments passed to process
+  resetArgv = setArgv([]);
+
+  // ? Suppress Yargs help output to keep test output clean
+  if (!process.env.DEBUG)
+    stderrSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+afterAll(() => {
+  resetArgv();
+  if (!process.env.DEBUG) stderrSpy.mockRestore();
+});
 
 describe(`${pkgName} [${TEST_IDENTIFIER}]`, () => {
-  describe('::sum', () => {
-    it('sums as expected', async () => {
+  describe('::configureProgram', () => {
+    it('creates new yargs instance when called with 0 arguments', () => {
       expect.hasAssertions();
-      expect(sum(2, 2)).toBe(4);
+      expect(configureProgram().program).not.toBeNil();
     });
 
-    it('fails if this test should fail', async () => {
+    it('does the right thing when called with no args', async () => {
       expect.hasAssertions();
-      expect(true).toBe(true);
+      await expect(getProgram().parse()).toResolve();
     });
-  });
 
-  describe('::diff', () => {
-    it('takes the difference as expected', async () => {
+    it('calls functionality', async () => {
       expect.hasAssertions();
-      expect(diff(2, 2)).toBe(0);
-    });
-  });
-
-  describe('::mult', () => {
-    it('multiplies as expected', async () => {
-      expect.hasAssertions();
-      expect(mult(2, 3)).toBe(6);
-    });
-  });
-
-  describe('::div', () => {
-    it('divides as expected', async () => {
-      expect.hasAssertions();
-      expect(div({ dividend: 4, divisor: 2 })).toBe(2);
+      await expect(runProgram([])).toResolve();
+      expect(mockedFunctionality).toHaveBeenCalled();
     });
   });
 });

@@ -1,36 +1,65 @@
 import { name as pkgName } from '../package.json';
+import { functionality } from './lib';
+import yargs from 'yargs/yargs';
 import debugFactory from 'debug';
 
-const debug = debugFactory(`${pkgName}:git-lib`);
+import type { Arguments, Argv } from 'yargs';
+
+export type Program = Argv;
+export type { Arguments };
+export type Parser = (argv?: string[]) => Promise<Arguments>;
+
+export type Context = {
+  program: Program;
+  parse: Parser;
+};
+
+const debug = debugFactory(`${pkgName}:index`);
 
 /**
- * Returns the sum of `a` and `b`
+ * Create and return a pre-configured Yargs instance (program) and argv parser.
  */
-export function sum(a: number, b: number) {
-  debug(`summed ${a} and ${b}`);
-  return a + b;
-}
-
+export function configureProgram(): Context;
 /**
- * Returns the difference of `a` and `b`
+ * Configure an existing Yargs instance (program) and return an argv parser.
+ *
+ * @param program A Yargs instance to configure
  */
-export function diff(a: number, b: number) {
-  debug(`subtracted ${b} from ${a}`);
-  return a - b;
-}
+export function configureProgram(program: Program): Context;
+export function configureProgram(program?: Program): Context {
+  const finalProgram = program || yargs();
 
-/**
- * Returns the product of `a` and `b`
- */
-export function mult(a: number, b: number) {
-  debug(`multiplies ${a} and ${b}`);
-  return a * b;
-}
+  finalProgram
+    .scriptName('cli')
+    .usage('$0' + '\n\nA description does here!')
+    .options({
+      silent: {
+        alias: 's',
+        describe: 'Nothing will be printed to stdout or stderr',
+        type: 'boolean'
+      }
+    })
+    .string('_')
+    // .group(
+    //   ['X', 'Y', 'Z'],
+    //   'Scope options:'
+    // )
+    .group(['help', 'version', 'silent'], 'Other options:')
+    .epilogue('Details:' + '\n  A few final points go here.')
+    .example([
+      ['$0', 'First example'],
+      ['$0 --silent', 'Second example']
+    ])
+    .strictOptions();
 
-/**
- * Returns the quotient of `dividend` and `divisor`
- */
-export function div({ dividend, divisor }: { dividend: number; divisor: number }) {
-  debug(`divides ${dividend} with ${divisor}`);
-  return dividend / divisor;
+  return {
+    program: finalProgram,
+    parse: async (argv?: string[]) => {
+      debug('parse: saw argv: %O', argv);
+      const finalArgv = finalProgram.parse(argv || []);
+
+      functionality();
+      return finalArgv;
+    }
+  };
 }

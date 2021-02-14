@@ -19,7 +19,7 @@ around!
 This repository makes extensive use of [debug][7] (through [rejoinder][8]).
 Should you wish to view all possible debugging output, [export `DEBUG='*'`][9].
 To get debugging output for just this project's components, [export
-`DEBUG='@xunnamius/dummy-pkg-1:*'`][9].
+`DEBUG='@xunnamius/dummy-pkg-2:*'`][9].
 
 The ideal contributor flow is as follows:
 

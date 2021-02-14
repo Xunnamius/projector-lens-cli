@@ -29,7 +29,7 @@ automation scripts, and the like.
 > [upstream peer dependency problems are resolved][1].
 
 ```shell
-npm install @xunnamius/dummy-pkg-1
+npm install @xunnamius/dummy-pkg-2
 ```
 
 <details><summary><strong>[additional details]</strong></summary>
@@ -72,7 +72,7 @@ package.
 ## Quick Start
 
 ```typescript
-import { sum } from '@xunnamius/dummy-pkg-1';
+import { sum } from '@xunnamius/dummy-pkg-2';
 
 sum(2, 2); // = 4
 ```
@@ -112,14 +112,14 @@ information.
   'Is this package well-tested?'
 [link-codecov]: https://codecov.io/gh/Xunnamius/projector-lens-cli
 [badge-license]:
-  https://img.shields.io/npm/l/@xunnamius/dummy-pkg-1
+  https://img.shields.io/npm/l/@xunnamius/dummy-pkg-2
   "This package's source license"
 [link-license]:
   https://github.com/Xunnamius/projector-lens-cli/blob/main/LICENSE
 [badge-npm]:
-  https://api.ergodark.com/badges/npm-pkg-version/@xunnamius/dummy-pkg-1
+  https://api.ergodark.com/badges/npm-pkg-version/@xunnamius/dummy-pkg-2
   'Install this package using npm or yarn!'
-[link-npm]: https://www.npmjs.com/package/@xunnamius/dummy-pkg-1
+[link-npm]: https://www.npmjs.com/package/@xunnamius/dummy-pkg-2
 [badge-semantic-release]:
   https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
   'This repo practices continuous integration and deployment!'

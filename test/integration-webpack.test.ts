@@ -46,11 +46,10 @@ const createIndexAndRunTest = (root: string) => ({
 
   const cmd1 = new sjx.ShellString(
     (source == SourceType.ESM
-      ? `import { sum, diff, mult, div } from '${pkgName}';`
-      : `const { sum, diff, mult, div } = require('${pkgName}');`) +
+      ? `import { configureProgram } from '${pkgName}';`
+      : `const { configureProgram } = require('${pkgName}');`) +
       `
-      const working = sum(2, 2) == 4 && diff(2, 2) == 0 && mult(2, 3) == 6 && div({ dividend: 4, divisor: 2 }) == 2;
-      console.log(working ? 'working' : 'not working');`.trim()
+    console.log(!!configureProgram().program ? 'working' : 'not working');`.trim()
   );
 
   debug(`echoing string \`${cmd1}\` to ${root}/src/index.${ext}`);

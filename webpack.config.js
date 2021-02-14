@@ -2,7 +2,6 @@
 // compile executables, etc
 
 const { EnvironmentPlugin, DefinePlugin, BannerPlugin } = require('webpack');
-const { config: populateEnv } = require('dotenv');
 const { verifyEnvironment } = require('./env-expect');
 const nodeExternals = require('webpack-node-externals');
 const debug = require('debug')(`${require('./package.json').name}:webpack-config`);
@@ -10,11 +9,14 @@ const debug = require('debug')(`${require('./package.json').name}:webpack-config
 let enableDotenvSupport = false;
 
 try {
-  require('fs').access('.env');
+  require('fs').accessSync('.env');
   enableDotenvSupport = true;
-} catch {}
+} catch (e) {
+  debug(`env support disabled; reason: ${e}`);
+}
 
-const dotenv = enableDotenvSupport ? populateEnv() : null;
+const dotenv = enableDotenvSupport ? require('dotenv')() : null;
+
 debug(
   ...(enableDotenvSupport
     ? ['saw dotenv result: %O', dotenv]
@@ -40,8 +42,8 @@ const externals = [
     /\.json$/.test(request) ? cb(null, `commonjs ${request}`) : cb()
 ];
 
-const mainConfig = {
-  name: 'main',
+const libConfig = {
+  name: 'lib',
   mode: 'production',
   target: 'node',
   node: false,
@@ -71,12 +73,10 @@ const mainConfig = {
   },
   optimization: { usedExports: true },
   ignoreWarnings: [/critical dependency:/i],
-  plugins: [
-    ...envPlugins
-  ]
+  plugins: [...envPlugins]
 };
 
-const externalsConfig = {
+/*const externalsConfig = {
   name: 'externals',
   mode: 'production',
   target: 'node',
@@ -111,7 +111,42 @@ const externalsConfig = {
     // * ▼ For non-bundled externals, make entry file executable w/ shebang
     new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
   ]
+};*/
+
+const cliConfig = {
+  name: 'cli',
+  mode: 'production',
+  target: 'node',
+  node: false,
+
+  entry: `${__dirname}/src/cli.ts`,
+
+  output: {
+    filename: 'cli.js',
+    path: `${__dirname}/dist`
+  },
+
+  externals,
+  externalsPresets: { node: true },
+
+  stats: {
+    orphanModules: true,
+    providedExports: true,
+    usedExports: true
+  },
+
+  resolve: { extensions: ['.ts', '.wasm', '.mjs', '.cjs', '.js', '.json'] },
+  module: {
+    rules: [{ test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ }]
+  },
+  optimization: { usedExports: true },
+  ignoreWarnings: [/critical dependency:/i],
+  plugins: [
+    ...envPlugins,
+    // * ▼ For bundled CLI applications, make entry file executable w/ shebang
+    new BannerPlugin({ banner: '#!/usr/bin/env node', raw: true, entryOnly: true })
+  ]
 };
 
-module.exports = [mainConfig, externalsConfig];
+module.exports = [libConfig, /*externalsConfig,*/ cliConfig];
 debug('exports: %O', module.exports);
