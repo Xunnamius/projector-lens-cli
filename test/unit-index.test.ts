@@ -1,12 +1,8 @@
-import { name as pkgName } from '../package.json';
 import { configureProgram } from '../src/index';
-import { asMockedFunction, setArgv } from './setup';
-
+import { asMockedFunction, withMockedArgv, withMockedOutput } from './setup';
 import { functionality } from '../src/lib';
 
 import type { Context } from '../src/index';
-
-const TEST_IDENTIFIER = 'unit-index';
 
 // ! Note:
 // !   - jest.mock calls are hoisted to the top even above imports
@@ -14,6 +10,7 @@ const TEST_IDENTIFIER = 'unit-index';
 // !   - better to manipulate mock in beforeAll() vs using a factory function
 jest.mock('../src/lib');
 
+// TODO: ensure lib functionality is mocked appropriately
 const mockedFunctionality = asMockedFunction(functionality);
 
 const getProgram = () => {
@@ -26,41 +23,35 @@ const runProgram = async (argv: string[], ctx?: Context) => {
   return (ctx || getProgram()).parse(argv);
 };
 
-let resetArgv: ReturnType<typeof setArgv>;
-let stderrSpy: ReturnType<typeof jest.spyOn>;
-
-beforeAll(() => {
-  // ? Store original arguments passed to process
-  resetArgv = setArgv([]);
-
-  // ? Suppress Yargs help output to keep test output clean
-  if (!process.env.DEBUG)
-    stderrSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
-});
+// ? Captures output and mocks argv
+const withMocks = async (
+  fn: Parameters<typeof withMockedOutput>[0],
+  argv: string[] = [],
+  options?: Parameters<typeof withMockedArgv>[2]
+) => withMockedArgv(() => withMockedOutput(fn), argv, options);
 
 afterEach(() => {
   jest.clearAllMocks();
 });
 
-afterAll(() => {
-  resetArgv();
-  if (!process.env.DEBUG) stderrSpy.mockRestore();
-});
-
-describe(`${pkgName} [${TEST_IDENTIFIER}]`, () => {
-  describe('::configureProgram', () => {
-    it('creates new yargs instance when called with 0 arguments', () => {
-      expect.hasAssertions();
+describe('::configureProgram', () => {
+  it('creates new yargs instance when called with 0 arguments', async () => {
+    expect.hasAssertions();
+    await withMocks(async () => {
       expect(configureProgram().program).not.toBeNil();
     });
+  });
 
-    it('does the right thing when called with no args', async () => {
-      expect.hasAssertions();
+  it('does the right thing when called with no args', async () => {
+    expect.hasAssertions();
+    await withMocks(async () => {
       await expect(getProgram().parse()).toResolve();
     });
+  });
 
-    it('calls functionality', async () => {
-      expect.hasAssertions();
+  it('calls functionality', async () => {
+    expect.hasAssertions();
+    await withMocks(async () => {
       await expect(runProgram([])).toResolve();
       expect(mockedFunctionality).toHaveBeenCalled();
     });
