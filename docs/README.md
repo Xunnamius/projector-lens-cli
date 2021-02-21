@@ -101,12 +101,12 @@ Defined in: [src/index.ts:28][10]
 [4]: README.md#program
 [5]: README.md#configureprogram
 [6]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L12
+  https://github.com/Xunnamius/projector-lens-cli/blob/fd086f2/src/index.ts#L12
 [7]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L10
+  https://github.com/Xunnamius/projector-lens-cli/blob/fd086f2/src/index.ts#L10
 [8]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L8
+  https://github.com/Xunnamius/projector-lens-cli/blob/fd086f2/src/index.ts#L8
 [9]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L22
+  https://github.com/Xunnamius/projector-lens-cli/blob/fd086f2/src/index.ts#L22
 [10]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L28
+  https://github.com/Xunnamius/projector-lens-cli/blob/fd086f2/src/index.ts#L28
