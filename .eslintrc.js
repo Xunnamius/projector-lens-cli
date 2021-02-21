@@ -33,7 +33,14 @@ module.exports = {
     'no-console': 'warn',
     'no-return-await': 'warn',
     'no-await-in-loop': 'warn',
-    'import/no-unresolved': ['error', { commonjs: true }],
+    'import/no-unresolved': [
+      'error',
+      {
+        commonjs: true
+        // ? Once Node 12 dies, these can be used safely
+        /*ignore: ['fs/promises', 'dns/promises']*/
+      }
+    ],
     'no-extra-boolean-cast': 'off',
     'no-empty': 'off',
     '@typescript-eslint/camelcase': 'off',
