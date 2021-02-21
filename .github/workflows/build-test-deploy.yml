@@ -722,7 +722,7 @@ jobs:
   auto-merge:
     name: '[CD] auto-merge'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     needs:
       - build
       - check-audit
@@ -755,7 +755,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
-            const MAX_RETRIES = 7;
+            const MAX_RETRIES = 6;
             const MINIMUM_SECONDS = 10;
             const JITTER_SECONDS = 10;
 
