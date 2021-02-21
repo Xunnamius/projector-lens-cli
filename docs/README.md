@@ -21,7 +21,7 @@
 #### Type parameters:
 
 | Name | Default |
-| ---- | ------- |
+| :--- | :------ |
 | `T`  | {}      |
 
 Defined in: node_modules/@types/yargs/index.d.ts:641
@@ -30,12 +30,12 @@ Defined in: node_modules/@types/yargs/index.d.ts:641
 
 ### Context
 
-Ƭ **Context**: { `parse`: [_Parser_][3] ; `program`: [_Program_][4] }
+Ƭ **Context**: _object_
 
 #### Type declaration:
 
 | Name      | Type           |
-| --------- | -------------- |
+| :-------- | :------------- |
 | `parse`   | [_Parser_][3]  |
 | `program` | [_Program_][4] |
 
@@ -46,6 +46,18 @@ Defined in: [src/index.ts:12][6]
 ### Parser
 
 Ƭ **Parser**: (`argv?`: _string_\[]) => _Promise_<[_Arguments_][1]>
+
+#### Type declaration:
+
+▸ (`argv?`: _string_\[]): _Promise_<[_Arguments_][1]>
+
+#### Parameters:
+
+| Name    | Type       |
+| :------ | :--------- |
+| `argv?` | _string_[] |
+
+**Returns:** _Promise_<[_Arguments_][1]>
 
 Defined in: [src/index.ts:10][7]
 
@@ -76,7 +88,7 @@ Configure an existing Yargs instance (program) and return an argv parser.
 #### Parameters:
 
 | Name      | Type           | Description                   |
-| --------- | -------------- | ----------------------------- |
+| :-------- | :------------- | :---------------------------- |
 | `program` | [_Program_][4] | A Yargs instance to configure |
 
 **Returns:** [_Context_][2]
@@ -89,12 +101,12 @@ Defined in: [src/index.ts:28][10]
 [4]: README.md#program
 [5]: README.md#configureprogram
 [6]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/3541ed7/src/index.ts#L12
+  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L12
 [7]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/3541ed7/src/index.ts#L10
+  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L10
 [8]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/3541ed7/src/index.ts#L8
+  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L8
 [9]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/3541ed7/src/index.ts#L22
+  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L22
 [10]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/3541ed7/src/index.ts#L28
+  https://github.com/Xunnamius/projector-lens-cli/blob/a9e855a/src/index.ts#L28
