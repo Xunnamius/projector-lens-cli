@@ -209,9 +209,18 @@ export async function withMockedOutput(
   }
 }
 
+// TODO: XXX: make this into a separate (run) package (along w/ below)
+export interface RunOptions extends execa.Options {
+  /**
+   * Setting this to `true` rejects the promise instead of resolving it with the error.
+   * @default false
+   */
+  reject?: boolean;
+}
+
 // TODO: XXX: make this into a separate (run) package
 // ! By default, does NOT reject on bad exit code (set reject: true to override)
-export async function run(file: string, args?: string[], options?: execa.Options) {
+export async function run(file: string, args?: string[], options?: RunOptions) {
   let result: ExecaReturnValue & { code: ExecaReturnValue['exitCode'] };
   // eslint-disable-next-line prefer-const
   result = (await execa(file, args, { reject: false, ...options })) as typeof result;
@@ -222,12 +231,12 @@ export async function run(file: string, args?: string[], options?: execa.Options
   return result;
 }
 
-// TODO: XXX: make this into a separate (run) package
-export function runnerFactory(file: string, args?: string[], options?: execa.Options) {
+// TODO: XXX: make this into a separate (run) package (along w/ above)
+export function runnerFactory(file: string, args?: string[], options?: RunOptions) {
   const factoryArgs = args;
   const factoryOptions = options;
 
-  return (args?: string[], options?: execa.Options) =>
+  return (args?: string[], options?: RunOptions) =>
     run(file, args || factoryArgs, { ...factoryOptions, ...options });
 }
 
