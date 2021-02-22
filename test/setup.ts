@@ -81,7 +81,7 @@ export function mockArgvFactory(
 // TODO: XXX: make this into a separate (mock-env) package
 export async function withMockedEnv(
   fn: () => AnyVoid,
-  newEnv: typeof process.env,
+  newEnv: Record<string, string>,
   options: MockEnvOptions = { replace: true }
 ) {
   const prevEnv = { ...process.env };
@@ -100,13 +100,17 @@ export async function withMockedEnv(
 
 // TODO: XXX: make this into a separate (mock-env) package (along w/ the above)
 export function mockEnvFactory(
-  newEnv: typeof process.env,
+  newEnv: Record<string, string>,
   options: MockEnvOptions = { replace: true }
 ) {
   const factoryNewEnv = newEnv;
   const factoryOptions = options;
 
-  return (fn: () => AnyVoid, newEnv?: typeof process.env, options?: MockEnvOptions) => {
+  return (
+    fn: () => AnyVoid,
+    newEnv?: Record<string, string>,
+    options?: MockEnvOptions
+  ) => {
     return withMockedEnv(
       fn,
       { ...factoryNewEnv, ...(newEnv || {}) },
@@ -121,8 +125,19 @@ export async function isolatedImport(path: string) {
 
   // ? Cache-busting
   jest.isolateModules(() => {
-    // ? While I'd prefer dynamic import(), it doesn't support cache busting!
-    pkg = require(path);
+    pkg = ((r) => {
+      debug(
+        `performing isolated import of ${path} as ${r.__esModule ? 'es' : 'cjs'} module`
+      );
+
+      if (!r.__esModule && r.default) {
+        debug(
+          'WARNING: treating module with default export as CJS instead of ESM, which could cause undefined behavior!'
+        );
+      }
+
+      return r.__esModule ? r.default : r;
+    })(require(path));
   });
 
   return pkg;
@@ -146,6 +161,21 @@ export async function withMockedExit(
   } finally {
     exitSpy.mockRestore();
   }
+}
+
+// TODO: XXX: make this into a separate package (along with the above)
+export function protectedImportFactory(path: string) {
+  return async (params?: { expectedExitCode?: number }) => {
+    let pkg: unknown = undefined;
+
+    await withMockedExit(async ({ exitSpy }) => {
+      pkg = await isolatedImport(path);
+      if (params?.expectedExitCode !== undefined)
+        expect(exitSpy).toBeCalledWith(params?.expectedExitCode);
+    });
+
+    return pkg;
+  };
 }
 
 // TODO: XXX: make this into a separate (mock-output) package
