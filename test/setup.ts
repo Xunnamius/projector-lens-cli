@@ -165,13 +165,12 @@ export async function withMockedExit(
 
 // TODO: XXX: make this into a separate package (along with the above)
 export function protectedImportFactory(path: string) {
-  return async (params?: { expectedExitCode?: number }) => {
+  return async (params: { expectedExitCode?: number }) => {
     let pkg: unknown = undefined;
 
     await withMockedExit(async ({ exitSpy }) => {
       pkg = await isolatedImport(path);
-      if (params?.expectedExitCode !== undefined)
-        expect(exitSpy).toBeCalledWith(params?.expectedExitCode);
+      expect(exitSpy).toBeCalledWith(params.expectedExitCode || 0);
     });
 
     return pkg;
