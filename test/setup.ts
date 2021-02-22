@@ -165,12 +165,15 @@ export async function withMockedExit(
 
 // TODO: XXX: make this into a separate package (along with the above)
 export function protectedImportFactory(path: string) {
-  return async (params: { expectedExitCode?: number }) => {
+  return async (params?: { expectedExitCode?: number }) => {
     let pkg: unknown = undefined;
 
     await withMockedExit(async ({ exitSpy }) => {
       pkg = await isolatedImport(path);
-      expect(exitSpy).toBeCalledWith(params.expectedExitCode || 0);
+      if (expect && params?.expectedExitCode)
+        expect(exitSpy).toBeCalledWith(params.expectedExitCode);
+      else if (!expect)
+        debug('WARNING: "expect" object not found, so exit check was skipped');
     });
 
     return pkg;
@@ -206,18 +209,6 @@ export async function withMockedOutput(
   }
 }
 
-// TODO: XXX: make this into a separate (mock-output-exit) package
-export async function withMockedOutputAndExit(
-  fn: (
-    spies: Parameters<Parameters<typeof withMockedOutput>[0]>[0] &
-      Parameters<Parameters<typeof withMockedExit>[0]>[0]
-  ) => AnyVoid
-) {
-  return withMockedExit(({ exitSpy }) =>
-    withMockedOutput((otherSpies) => fn({ ...otherSpies, exitSpy }))
-  );
-}
-
 // TODO: XXX: make this into a separate (run) package
 // ! By default, does NOT reject on bad exit code (set reject: true to override)
 export async function run(file: string, args?: string[], options?: execa.Options) {
@@ -226,7 +217,7 @@ export async function run(file: string, args?: string[], options?: execa.Options
   result = (await execa(file, args, { reject: false, ...options })) as typeof result;
 
   result.code = result.exitCode;
-  debug('executed command: %O', result);
+  debug('executed command result: %O', result);
 
   return result;
 }

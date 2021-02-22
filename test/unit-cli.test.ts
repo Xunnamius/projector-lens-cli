@@ -1,9 +1,5 @@
 import { configureProgram } from '../src/index';
-import {
-  asMockedFunction,
-  isolatedImportFactory,
-  withMockedOutputAndExit
-} from './setup';
+import { asMockedFunction, protectedImportFactory, withMockedOutput } from './setup';
 
 import type { Context } from '../src/index';
 
@@ -17,7 +13,7 @@ jest.mock('../src/index');
 
 let mockSilent = false;
 
-const isolatedImport = isolatedImportFactory(CLI_PATH);
+const protectedImport = protectedImportFactory(CLI_PATH);
 const mockedParse = jest.fn(async () => ({}));
 const mockedConfigureProgram = asMockedFunction(configureProgram).mockImplementation(
   () =>
@@ -34,8 +30,8 @@ afterEach(() => {
 it('executes program on import', async () => {
   expect.hasAssertions();
 
-  await withMockedOutputAndExit(async () => {
-    await isolatedImport();
+  await withMockedOutput(async () => {
+    await protectedImport();
 
     expect(mockedConfigureProgram).toBeCalledWith();
     expect(mockedParse).toBeCalledWith();
@@ -49,13 +45,12 @@ it('errors gracefully on exception (with Error instance)', async () => {
     throw new Error('problems!');
   });
 
-  await withMockedOutputAndExit(async ({ errorSpy, exitSpy }) => {
-    await isolatedImport();
+  await withMockedOutput(async ({ errorSpy }) => {
+    await protectedImport({ expectedExitCode: 1 });
 
     expect(mockedConfigureProgram).toBeCalledWith();
     expect(mockedParse).toBeCalledWith();
     expect(errorSpy).toBeCalledWith(expect.toInclude('problems!'));
-    expect(exitSpy).toBeCalledWith(1);
   });
 
   mockedParse.mockReset();
@@ -66,13 +61,12 @@ it('errors gracefully on exception (with error string)', async () => {
 
   mockedParse.mockImplementationOnce(() => Promise.reject('problems!'));
 
-  await withMockedOutputAndExit(async ({ errorSpy, exitSpy }) => {
-    await isolatedImport();
+  await withMockedOutput(async ({ errorSpy }) => {
+    await protectedImport({ expectedExitCode: 1 });
 
     expect(mockedConfigureProgram).toBeCalledWith();
     expect(mockedParse).toBeCalledWith();
     expect(errorSpy).toBeCalledWith(expect.toInclude('problems!'));
-    expect(exitSpy).toBeCalledWith(1);
   });
 
   mockedParse.mockReset();
@@ -84,13 +78,12 @@ it('respects --silent flag', async () => {
   mockSilent = true;
   mockedParse.mockImplementationOnce(() => Promise.reject('BIG BOY ERROR'));
 
-  await withMockedOutputAndExit(async ({ errorSpy, exitSpy }) => {
-    await isolatedImport();
+  await withMockedOutput(async ({ errorSpy }) => {
+    await protectedImport({ expectedExitCode: 1 });
 
     expect(mockedConfigureProgram).toBeCalledWith();
     expect(mockedParse).toBeCalledWith();
     expect(errorSpy).not.toHaveBeenCalled();
-    expect(exitSpy).toBeCalledWith(1);
   });
 
   mockedParse.mockReset();
