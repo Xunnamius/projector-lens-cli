@@ -31,7 +31,7 @@ it('executes when called directly (shebang test)', async () => {
   expect.hasAssertions();
 
   await withMockedFixture(async ({ root }) => {
-    const { code, stdout } = await run(CLI_BIN_PATH, [], { cwd: root });
+    const { code, stdout } = await run(CLI_BIN_PATH, ['--help'], { cwd: root });
 
     expect(code).toBe(0);
     expect(stdout).toInclude('hello, world');
