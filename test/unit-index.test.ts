@@ -4,6 +4,8 @@ import { functionality } from '../src/lib';
 
 import type { Context } from '../src/index';
 
+// TODO: replace src/lib where appropriate
+
 // ! Note:
 // !   - jest.mock calls are hoisted to the top even above imports
 // !   - factory function of jest.mock(...) is not guaranteed to run early

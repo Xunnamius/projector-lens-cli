@@ -4,6 +4,7 @@ import { run, mockFixtureFactory } from './setup';
 
 import type { FixtureOptions } from './setup';
 
+// TODO: replace TEST_IDENTIFIER and CLI_BIN_PATH below with actual values
 const TEST_IDENTIFIER = 'integration-client';
 const CLI_BIN_PATH = `${__dirname}/../${pkgBin['dummy-pkg-2']}`;
 

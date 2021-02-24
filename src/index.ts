@@ -14,7 +14,8 @@ export type Context = {
   parse: Parser;
 };
 
-const debug = debugFactory(`${pkgName}:index`);
+// TODO: replace "parse" (index) below with actual name
+const debug = debugFactory(`${pkgName}:parse`);
 
 /**
  * Create and return a pre-configured Yargs instance (program) and argv parser.

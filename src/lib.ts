@@ -1,7 +1,8 @@
 import { name as pkgName } from '../package.json';
 import debugFactory from 'debug';
 
-const debug = debugFactory(`${pkgName}:git-lib`);
+// TODO: replace "lib" below with actual name
+const debug = debugFactory(`${pkgName}:lib`);
 
 /**
  * Does functionality
