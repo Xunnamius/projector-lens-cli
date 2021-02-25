@@ -83,7 +83,7 @@ it('respects --silent flag', async () => {
 
     expect(mockedConfigureProgram).toBeCalledWith();
     expect(mockedParse).toBeCalledWith();
-    expect(errorSpy).not.toHaveBeenCalled();
+    expect(errorSpy).not.toBeCalled();
   });
 
   mockedParse.mockReset();

@@ -10,7 +10,7 @@ describe('::functionality', () => {
     expect.hasAssertions();
     await withMockedOutput(({ logSpy }) => {
       lib.functionality();
-      expect(logSpy).toHaveBeenCalled();
+      expect(logSpy).toBeCalled();
     });
   });
 });

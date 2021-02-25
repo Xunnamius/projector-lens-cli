@@ -55,7 +55,7 @@ describe('::configureProgram', () => {
     expect.hasAssertions();
     await withMocks(async () => {
       await expect(runProgram([])).toResolve();
-      expect(mockedFunctionality).toHaveBeenCalled();
+      expect(mockedFunctionality).toBeCalled();
     });
   });
 });
