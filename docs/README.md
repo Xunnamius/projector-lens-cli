@@ -79,7 +79,7 @@ Create and return a pre-configured Yargs instance (program) and argv parser.
 
 **Returns:** [_Context_][2]
 
-Defined in: [src/index.ts:22][9]
+Defined in: [src/index.ts:23][9]
 
 ▸ **configureProgram**(`program`: [_Program_][4]): [_Context_][2]
 
@@ -93,7 +93,7 @@ Configure an existing Yargs instance (program) and return an argv parser.
 
 **Returns:** [_Context_][2]
 
-Defined in: [src/index.ts:28][10]
+Defined in: [src/index.ts:29][10]
 
 [1]: README.md#arguments
 [2]: README.md#context
@@ -101,12 +101,12 @@ Defined in: [src/index.ts:28][10]
 [4]: README.md#program
 [5]: README.md#configureprogram
 [6]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/fa334f7/src/index.ts#L12
+  https://github.com/Xunnamius/projector-lens-cli/blob/119474d/src/index.ts#L12
 [7]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/fa334f7/src/index.ts#L10
+  https://github.com/Xunnamius/projector-lens-cli/blob/119474d/src/index.ts#L10
 [8]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/fa334f7/src/index.ts#L8
+  https://github.com/Xunnamius/projector-lens-cli/blob/119474d/src/index.ts#L8
 [9]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/fa334f7/src/index.ts#L22
+  https://github.com/Xunnamius/projector-lens-cli/blob/119474d/src/index.ts#L23
 [10]:
-  https://github.com/Xunnamius/projector-lens-cli/blob/fa334f7/src/index.ts#L28
+  https://github.com/Xunnamius/projector-lens-cli/blob/119474d/src/index.ts#L29
