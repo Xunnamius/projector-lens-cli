@@ -755,7 +755,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
-            const MAX_RETRIES = 6;
+            const MAX_RETRIES = 5;
             const MINIMUM_SECONDS = 10;
             const JITTER_SECONDS = 10;
 
