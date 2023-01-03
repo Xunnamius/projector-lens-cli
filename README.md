@@ -48,12 +48,13 @@ via `import { ... } from ...` or `import(...)` will cause Node to use the ESM
 entry point in [versions that support it][node-esm-support], as will Webpack.
 Using the `import` syntax is the modern, preferred choice.
 
-For backwards compatibility with Webpack 4 and Node versions < 14,
-[`package.json`][package-json] retains the [`module`][module-key] key, which
-points to the ESM entry point, and the [`main`][exports-main-key] key, which
-points to the CJS2 entry point explicitly (using the .js file extension). For
-Webpack 5 and Node versions >= 14, [`package.json`][package-json] includes the
-[`exports`][exports-main-key] key, which points to both entry points explicitly.
+For backwards compatibility with Webpack 4 (_compat with Webpack 4 is not
+guaranteed!_) and Node versions < 14, [`package.json`][package-json] retains the
+[`module`][module-key] key, which points to the ESM entry point, and the
+[`main`][exports-main-key] key, which points to the CJS2 entry point explicitly
+(using the .js file extension). For Webpack 5 and Node versions >= 14,
+[`package.json`][package-json] includes the [`exports`][exports-main-key] key,
+which points to both entry points explicitly.
 
 Though [`package.json`][package-json] includes
 [`{ "type": "commonjs"}`][local-pkg], note that the ESM entry points are ES
@@ -90,10 +91,10 @@ to let me know you found it useful! ✊🏿 Thank you!
 See [CONTRIBUTING.md][contributing] and [SUPPORT.md][support] for more
 information.
 
-[badge-blm]: https://api.ergodark.com/badges/blm 'Join the movement!'
-[link-blm]: https://secure.actblue.com/donate/ms_blm_homepage_2019
+[badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
+[link-blm]: https://xunn.at/donate-blm
 [badge-maintenance]:
-  https://img.shields.io/maintenance/active/2021
+  https://img.shields.io/maintenance/active/2023
   'Is this package maintained?'
 [link-repo]: https://github.com/xunnamius/projector-lens-cli
 [badge-last-commit]:
