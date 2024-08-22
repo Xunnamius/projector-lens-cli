@@ -1,22 +1,17 @@
-<!-- prettier-ignore-start -->
-
 <!-- badges-start -->
 
 [![Black Lives Matter!][badge-blm]][link-blm]
-[![Maintenance status][badge-maintenance]][link-repo]
-[![Last commit timestamp][badge-last-commit]][link-repo]
-[![Open issues][badge-issues]][link-issues]
-[![Pull requests][badge-pulls]][link-pulls]
-[![codecov][badge-codecov]][link-codecov]
-[![Source license][badge-license]][link-license]
-[![NPM version][badge-npm]][link-npm]
-[![semantic-release][badge-semantic-release]][link-semantic-release]
+[![!!UNMAINTAINED!!][badge-unmaintained]][link-unmaintained]
 
 <!-- badges-end -->
 
-<!-- prettier-ignore-end -->
+# ⛔️ DEPRECATED/UNMAINTAINED
 
-# projector-lens-cli
+> [!CAUTION]
+>
+> This project has been superseded (and all of its useful bits subsumed) by the
+> [`xscripts project init --template cli`](https://github.com/Xunnamius/xscripts)
+> command.
 
 A CLI template with GitHub Action workflows, CI/CD publishing and deployment
 automation scripts, and the like.
@@ -93,6 +88,10 @@ information.
 
 [badge-blm]: https://xunn.at/badge-blm 'Join the movement!'
 [link-blm]: https://xunn.at/donate-blm
+[badge-unmaintained]:
+  https://xunn.at/badge-unmaintained
+  'Unfortunately, this project is unmaintained (forks welcome!)'
+[link-unmaintained]: https://xunn.at/link-unmaintained
 [badge-maintenance]:
   https://img.shields.io/maintenance/active/2023
   'Is this package maintained?'
@@ -118,7 +117,7 @@ information.
 [link-license]:
   https://github.com/Xunnamius/projector-lens-cli/blob/main/LICENSE
 [badge-npm]:
-  https://api.ergodark.com/badges/npm-pkg-version/@xunnamius/dummy-pkg-2
+  https://xunn.at/npm-pkg-version/@xunnamius/dummy-pkg-2
   'Install this package using npm or yarn!'
 [link-npm]: https://www.npmjs.com/package/@xunnamius/dummy-pkg-2
 [badge-semantic-release]:
